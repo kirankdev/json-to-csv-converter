@@ -2,7 +2,7 @@
 let csvContent = "data:text/csv;charset=utf-8,";
 
 function fillCSVHeader() {
-    csvContent += 'Flow, Region, Name, SRCi V2 Lib.js download,	V2 Init(),	MA SDK download,	Visa SDK Load,	Amex SDK Load,	Discover SDK Load,	MA SDK Init,	Visa SDK Init,	Amex SDK Init,	Discover SDK Init,	MA SDK isRecognized(),	Visa SDK isRecognized(),	Amex SDK isRecognized(),	Discover SDK isRecognized(),	V2 getCards(),	MA SDK getSrcProfile(),	Visa SDK getSrcProfile(),	Amex SDK getSrcProfile(),	Discover SDK getSrcProfile(),	V2 Lookup(),	MA SDK idLookup() ,	Visa SDK idLookup(),	Amex SDK idLookup(),	Discover SDK idLookup()' + "\r\n";
+    csvContent += 'Flow, Region, Name, Environment, SRCi V2 Lib.js download,	V2 Init(),	MA SDK download,	Visa SDK Load,	Amex SDK Load,	Discover SDK Load,	MA SDK Init,	Visa SDK Init,	Amex SDK Init,	Discover SDK Init,	MA SDK isRecognized(),	Visa SDK isRecognized(),	Amex SDK isRecognized(),	Discover SDK isRecognized(),	V2 getCards(),	MA SDK getSrcProfile(),	Visa SDK getSrcProfile(),	Amex SDK getSrcProfile(),	Discover SDK getSrcProfile(),	V2 Lookup(),	MA SDK idLookup() ,	Visa SDK idLookup(),	Amex SDK idLookup(),	Discover SDK idLookup()' + "\r\n";
 }
 
 function getloadTimesResponseTime(arr, key) {
@@ -66,7 +66,7 @@ function generateCSVString(arr) {
         else if (card.flowName === 'getCardsRecognizedRequiresCookie') {
             row.push((card.flowName ?? '').includes('RequiresCookie') ? 'requires cookie' : '')
         }
-        else if (card.flowName === 'idLookupRecognizedMaSandbox' || card.flowName === 'idLookupRecognizedVisaSandbox') {
+        else if (card.flowName === 'idLookupRecognizedMa' || card.flowName === 'idLookupRecognizedVisa' || card.flowName === 'idLookupRecognizedDiscover') {
             row.push((card.flowName ?? '').includes('Recognized') ? 'Recognized' : '')
         }
         else if (card.flowName === 'idLookupUnrecognized') {
@@ -75,6 +75,9 @@ function generateCSVString(arr) {
         else{
             row.push('')
         }
+
+        // Env
+        row.push(card.environment ?? '')
 
 
         // SRCi V2 Lib.js download
